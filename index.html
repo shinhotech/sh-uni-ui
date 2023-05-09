@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+  <meta charset="UTF-8">
+  <!-- 主题：白色-vue -->
+  <link rel="stylesheet" href="https://unpkg.com/docsify/themes/vue.css">
+  <!-- 主题：黑色 -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/docsify/themes/dark.css"> -->
+  <!-- 自定义颜色 -->
+  <style>
+    /* 切换主题按钮 */
+    .app-nav>ul>li:last-child {
+      position: fixed;
+      bottom: 10px;
+      right: 5px;
+    }
+    /* sidebar */
+    li>.app-sub-sidebar {
+      position: fixed;
+      top: 200px;
+      right: 1%;
+      width: 14%;
+      min-width: 100px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      max-height: 60%;
+      background: #e9f0b45c;
+      border-radius: 4px;
+      padding-left: 10px !important;
+    }
+    li>.app-sub-sidebar li::before {
+      content: '·';
+      font-weight: bold;
+    }
+    section.content {
+      right: 8%;
+    }
+    /* editor on github */
+    .markdown-section>div[style="overflow: auto"]{
+      position: absolute;
+      left: 138px;
+      top: 6px;
+    }
+    .markdown-section>h1+div[style="overflow: auto"]{
+      top: 63px;
+    }
+    /* 字数、阅读时间 */
+    .markdown-section>div[style="margin-bottom: 10px;"]>span{
+      float: left !important;
+    }
+    /* 代码格式 */
+    .markdown-section pre {
+      padding: 0 .4rem;
+      margin: .2em 0;
+    }
+    .markdown-section pre > code {
+      padding: 1em 6px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="https://unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="https://unpkg.com/docsify/lib/plugins/emoji.min.js"></script>
+  <script src="https://unpkg.com/docsify-edit-on-github/index.js"></script>
+  <script>
+    window.$docsify = {
+      basePath: '/sh-uni-ui/docs/',
+      loadNavbar: true,
+      loadSidebar: true,
+      coverpage: true, // 自定义封面
+      onlyCover: true, // 封面作为首页
+      autoHeader: true,
+      search: 'auto', // 默认值
+      subMaxLevel: 3,
+      plugins: [
+        EditOnGithubPlugin.create(
+          'https://github.com/shinhotech/sh-uni-ui/blob/main/',
+          null,
+          '✍🏻'
+        )
+      ]
+    }
+  </script>
+  <!--全文搜索-->
+  <script src="https://unpkg.com/docsify/lib/plugins/search.min.js"></script>
+  <!--Java代码高亮-->
+  <script src="//unpkg.com/prismjs/components/prism-java.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-python.js"></script>
+  <!-- 复制到剪贴板 -->
+  <script src="//unpkg.com/docsify-copy-code"></script>
+  <!-- emoji -->
+  <script src="//unpkg.com/docsify/lib/plugins/emoji.js"></script>
+  <!-- 图片缩放 -->
+  <script src="//unpkg.com/docsify/lib/plugins/zoom-image.js"></script>
+  <!-- 字数统计 -->
+  <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+  <!-- 换肤 -->
+  <script>
+  setTimeout(() => {
+    const themes = ['vue', 'dark'];
+    const $btn = document.querySelector('a[data-theme]');
+    const $link = document.querySelector('link[rel]')
+    let nextThemeLocal = localStorage.getItem("activeTheme");
+    if (nextThemeLocal != null && nextThemeLocal != "null") changeTheme(nextThemeLocal);
+
+    $btn.onclick = function(e) {
+      changeTheme();
+    };
+    /* 切换主题 */
+    function changeTheme(nextThemeParam) {
+      let activeTheme = $btn.attributes['data-theme'].nodeValue;
+      let nextTheme = nextThemeParam || themes[themes.length - 1 - themes.indexOf(activeTheme)];
+      $btn.attributes['data-theme'].nodeValue = nextTheme;
+      localStorage.setItem("activeTheme", nextTheme);
+      let activeCssLinkArray = $link.attributes.href.value.split(activeTheme);
+      let nextCssLink = activeCssLinkArray[0] + nextTheme + activeCssLinkArray[1];
+      $link.attributes.href.value = nextCssLink;
+    }
+  }, 3000)
+  </script>
+</body>
+</html>
